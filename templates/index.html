@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .todo-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .todo-button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .todo-button:hover {
+            background: #0056b3;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .task-text {
+            flex: 1;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .task-actions a {
+            margin-left: 10px;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .complete-btn {
+            background: #28a745;
+            color: white;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .health {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>📝 To-Do App</h1>
+    
+    <form method="POST" action="/add" class="todo-form">
+        <input type="text" name="task" placeholder="Enter a new task..." required class="todo-input">
+        <button type="submit" class="todo-button">Add Task</button>
+    </form>
+    
+    <ul class="task-list">
+        {% for task in tasks %}
+        <li class="task-item">
+            <span class="task-text {% if task.completed %}completed{% endif %}">
+                {{ task.task }}
+            </span>
+            <div class="task-actions">
+                {% if not task.completed %}
+                <a href="/complete/{{ task.id }}" class="complete-btn">✓ Complete</a>
+                {% endif %}
+                <a href="/delete/{{ task.id }}" class="delete-btn">✗ Delete</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <div class="health">
+        <a href="/health">Health Check</a>
+    </div>
+</body>
+</html>
